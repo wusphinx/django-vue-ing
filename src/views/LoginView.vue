@@ -1,29 +1,41 @@
+<template>
+  <form @submit="Submit" method="post">
+    <label for="uname"><b>Email</b></label>
+    <input
+      type="email"
+      placeholder="Enter Email"
+      v-model="form.email"
+      required
+    />
+    <br /><br />
+    <label for="psw"><b>Password</b></label>
+    <input
+      type="password"
+      placeholder="Enter Password"
+      v-model="form.password"
+      required
+    />
+    <br /><br />
+    <button type="submit">Login</button>
+  </form>
+  <br />
+  {{ $store.state.email }}
+</template>
 <script>
-import { createStore } from "vuex";
-
-export default createStore({
-  state: {
-    email: "",
+export default {
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+    };
   },
-  getters: {},
-  mutations: {
-    login(state, email) {
-      state.email = email;
-      localStorage.setItem("email", email);
-      alert("Logged in");
-    },
-    logout(state) {
-      state.email = "";
-      localStorage.removeItem("email");
-      alert("Logged out");
-    },
-    initialiseStore(state) {
-      if (localStorage.getItem("email")) {
-        state.email = localStorage.getItem("email");
-      }
+  methods: {
+    Submit(event) {
+      event.preventDefault();
+      this.$store.commit("login", this.form.email);
     },
   },
-  actions: {},
-  modules: {},
-});
+};
 </script>
